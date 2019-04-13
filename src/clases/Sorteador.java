@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Random;
  * @see <a href="http://www.github.com/caemci"/>http://www.github.com/caemci</a>
  */
 
-public class Sorteador <T> {
+public class Sorteador <T> implements Iterable<T> {
 	private ArrayList<T> elementos;
 	private final int CANT_MAXIMA;
 	
@@ -44,8 +45,7 @@ public class Sorteador <T> {
 		T elemento = null;
 		if ( !estaVacio() ) {
 			int a = aleatorio(this.elementos.size());
-			elemento = this.elementos.get(a);
-			this.elementos.remove(a);
+			elemento = this.elementos.remove(a); // Lo elimina y lo devuelve
 		}
 		return elemento;
 	}
@@ -83,5 +83,24 @@ public class Sorteador <T> {
 	private int aleatorio (int n) {
 		Random r = new Random(System.currentTimeMillis());
 		return r.nextInt(n);
+	}
+
+	// La interfaz 'Iterable' obliga a sobreescribir este método
+	@Override
+	public Iterator<T> iterator() {
+		return new IteratorSorteador(); // Retorno un iterador propio de este tipo de colección
+	}
+	
+	private class IteratorSorteador implements Iterator<T> {
+		// Una clase anidada puede ver todos los miembros de la clase contenedora
+		@Override
+		public boolean hasNext() {
+			return !estaVacio(); // Para saber si hay un siguiente, basta responde si NO está vacío
+		}
+
+		@Override
+		public T next() {
+			return obtener(); // Para retorna el siguiente, invocamos al método obtener()
+		}
 	}
 }
