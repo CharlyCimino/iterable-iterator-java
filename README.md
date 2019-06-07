@@ -18,11 +18,12 @@ O:
 
 ```java
 for (String sorteado : miSorteador) {
-	System.out.println( sorteado );
+    System.out.println( sorteado );
 }
 ```
 ## Diagrama de clases
 
+Las dependencias de la clase Principal no son mostradas para simplificar el diagrama.
 ![Diagrama de clases](src/ejemploiterable/uml/clases-iterable-iterator-java.png)
 
 Proyecto realizado con Eclipse IDE.
