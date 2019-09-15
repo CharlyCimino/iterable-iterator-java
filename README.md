@@ -25,4 +25,4 @@ for (String sorteado : miSorteador) {
 
 ![Diagrama de clases](src/ejemploiterable/uml/clases-iterable-iterator-java.png)
 
-Proyecto realizado con Eclipse IDE.
+Proyecto realizado con NetBeans 8.2. Compatible con Eclipse.
