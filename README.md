@@ -18,7 +18,7 @@ O:
 
 ```java
 for (String sorteado : miSorteador) {
-	System.out.println( sorteado );
+    System.out.println( sorteado );
 }
 ```
 ## Diagrama de clases
