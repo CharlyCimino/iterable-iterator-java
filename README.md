@@ -31,8 +31,8 @@ Sin embargo, hay dos maneras de iterarlo sin conocer sus detalles de implementac
 ```java
 Iterator<String> it = miSorteador.iterator(); // Pido un iterador al sorteador
 while (it.hasNext()) { // Mientras haya siguiente
-	String elemento = it.next(); // Guardar siguiente en 'elemento'
-	System.out.println(elemento); // Mostrar 'elemento'
+    String elemento = it.next(); // Guardar siguiente en 'elemento'
+    System.out.println(elemento); // Mostrar 'elemento'
 }
 ```
 ### Utilizando la estructura `foreach`
