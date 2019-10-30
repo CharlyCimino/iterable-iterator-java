@@ -11,19 +11,34 @@ import java.util.Iterator;
 public class Principal {
 
     public static void main(String[] args) {
-        Sorteador<String> miSorteador = new Sorteador<String>();
+        Sorteador<String> miSorteador = new Sorteador<String>(); // Instancia un sorteador de Strings
 
-        miSorteador.insertar("Argentina");
-        miSorteador.insertar("Brasil");
-        miSorteador.insertar("Perú");
-        miSorteador.insertar("Bolivia");
-        miSorteador.insertar("Venezuela");
+        cargarSorteadorConDatos(miSorteador); // Carga algunos Strings
 
+        ///////////////// Iterar con un iterador /////////////////////
+        System.out.println("Iterar con un iterador");
+        // Los iteradores permiten iterar cualquier colección sin conocer sus detalles de implementación
         Iterator it = miSorteador.iterator(); // Pido un iterador al sorteador
-        // Los iteradores permiten iterar sin conocer cómo funciona la colección por
-        // dentro
-        while (it.hasNext()) {
-            System.out.println(it.next());
+        while (it.hasNext()) { // Mientras haya siguiente
+            System.out.println(it.next()); // Mostrar siguiente
         }
+
+        // Se vació el sorteador. Lo vuelvo a cargar
+        cargarSorteadorConDatos(miSorteador); // Carga algunos Strings
+
+        ///////////////// Iterar con foreach /////////////////////
+        System.out.println("Iterar con foreach");
+        // Foreach permite iterar cualquier colección sin conocer sus detalles de implementación. Utiliza el iterador de la colección.
+        for (String elemento : miSorteador) { // Para cada 'elemento' de tipo 'String' en la colección 'miSorteador'
+            System.out.println(elemento); // Mostrar 'elemento'
+        }
+    }
+
+    public static void cargarSorteadorConDatos(Sorteador<String> miSorteador) {
+        miSorteador.insertar("1. Argentina");
+        miSorteador.insertar("2. Brasil");
+        miSorteador.insertar("3. Perú");
+        miSorteador.insertar("4. Bolivia");
+        miSorteador.insertar("5. Venezuela");
     }
 }

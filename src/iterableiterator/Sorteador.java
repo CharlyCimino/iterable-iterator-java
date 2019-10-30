@@ -16,110 +16,80 @@ import java.util.Random;
 public class Sorteador<T> implements Iterable<T> {
 
     private ArrayList<T> elementos;
-    private ArrayList<T> candidatos;
     private Random random;
 
     /**
      * Construye un nuevo sorteador de elementos.
      */
     public Sorteador() {
-        this.candidatos = new ArrayList<T>();
         this.elementos = new ArrayList<T>();
         this.random = new Random();
     }
 
     /**
-     * Inserta <code>elemento</code> en el sorteador siempre y cuando no exista.
+     * Inserta <code>elemento</code> en este sorteador.
      *
      * @param elemento El elemento a insertar.
      */
     public void insertar(T elemento) {
-        if (existe(elemento)) {
-            throw new IllegalArgumentException("Ya existe el elemento " + elemento);
-        } else {
-            candidatos.add(elemento);
-            elementos.add(elemento);
-        }
+        elementos.add(elemento);
     }
 
     /**
-     * Inserta cada uno de los elementos de <code>elementos</code> en la
-     * colección.
+     * Inserta cada uno de los elementos de <code>elementos</code> en este
+     * sorteador.
      *
-     * @param elementos Los elementos a insertar.
+     * @param elementos El array de elementos a insertar.
      */
     public void insertar(T[] elementos) {
         this.insertar(Arrays.asList(elementos));
     }
 
     /**
-     * Inserta cada uno de los elementos de <code>elementos</code> en la
-     * colección.
+     * Inserta cada uno de los elementos de <code>elementos</code> en este
+     * sorteador.
      *
-     * @param elementos Los elementos a insertar.
+     * @param elementos La lista de elementos a insertar.
      */
     public void insertar(List<T> elementos) {
-        this.candidatos.addAll(elementos);
         this.elementos.addAll(elementos);
     }
 
     /**
-     * Retorna un elemento de la colección de manera aleatoria.
+     * Retorna un elemento de este sorteador de manera aleatoria.
      *
-     * @return un elemento de la colección de manera aleatoria.
+     * @return un elemento de este sorteador de manera aleatoria.
+     * @throws IllegalStateException Si ya no quedan elementos en este
+     * sorteador.
      */
     public T proximoSorteado() {
-        T elemento;
         if (estaVacio()) {
-            throw new UnsupportedOperationException("No hay elementos en el sorteador");
-        } else {
-            int a = aleatorio(this.candidatos.size());
-            elemento = this.candidatos.remove(a); // remove() lo devuelve antes de borrarlo
+            throw new IllegalStateException("No hay elementos en el sorteador");
         }
-        return elemento;
+        int a = aleatorio(0, this.elementos.size() - 1);
+        return this.elementos.remove(a);
     }
 
     /**
-     * Retorna <code>true</code> si no hay elementos en la colección.
+     * Retorna <code>true</code> si no hay elementos en este sorteador.
      *
-     * @return <code>true</code> si no hay elementos en esta colección.
+     * @return <code>true</code> si no hay elementos en este sorteador.
      */
     public boolean estaVacio() {
-        return this.candidatos.isEmpty();
+        return this.elementos.isEmpty();
     }
 
     /**
-     * Retorna <code>true</code> si existe <code>elemento</code> en la
-     * colección.
+     * Retorna un número entero aleatorio entre <code>min</code> y
+     * <code>max</code>.
      *
-     * @param elemento El elemento a comprobar.
-     * @return <code>true</code> si existe <code>elemento</code> en esta
-     * colección.
+     * @param min Entero mínimo a devolver (incluído).
+     * @param max Entero máximo a devolver (incluído).
+     * @return un número entero aleatorio entre <code>min</code> y
+     * <code>max</code>.
      */
-    private boolean existe(T elemento) {
-        return this.candidatos.contains(elemento);
-    }
-
-    /**
-     * Retorna <code>true</code> si existe <code>elemento</code> en la
-     * colección.
-     *
-     * @param elemento El elemento a comprobar.
-     * @return <code>true</code> si existe <code>elemento</code> en esta
-     * colección.
-     */
-    public void reiniciar() {
-        this.candidatos = new ArrayList<T>(this.elementos);
-    }
-
-    /**
-     * Retorna un número entero aleatorio entre 0 y <code>n-1</code>
-     *
-     * @param n Entero máximo a devolver (sin incluir)
-     * @return un número entero aleatorio entre 0 y <code>n-1</code>
-     */
-    private int aleatorio(int n) {
-        return random.nextInt(n);
+    private int aleatorio(int min, int max) {
+        return random.nextInt((max - min + 1)) + min;
     }
 
     /**
