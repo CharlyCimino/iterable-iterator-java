@@ -3,8 +3,12 @@
 ## Descripción
 
 Ejemplo de funcionamiento de las interfaces `Iterable` e `Iterator` en Java.
-Sobre una colección propia llamada `Sorteador` se implementa la interfaz `Iterable` que obliga a sobreescribir el método `iterator()`, el cual debe retornar un objeto de tipo `Iterator`.
-Se crea una clase interna llamada `IteratorSorteador` que implementa la interfaz `Iterator`, la cual obliga a sobreescribir los métodos `next()` y `hasNext()`. Éstos permiten iterar cualquier colección sin conocer su estructura.
+
+Sobre una colección propia llamada `Sorteador` se implementa la interfaz `Iterable` que obliga a sobreescribir el método `iterator()`, el cual debe retornar un objeto `Iterator`.
+
+Como `Iterator` es una interfaz, se crea una clase interna en la clase `Sorteador` llamada `IteratorSorteador` que implementa `Iterator`. Esta interfaz obliga a sobreescribir los métodos `next()` y `hasNext()`, cuyas firmas pueden observarse en el diagrama de clases o el código del proyecto.
+
+**Una colección iterable permite poder iterarla sin conocer sus detalles de implementación.**
 
 Suponiendo tener un sorteador de cadenas:
 
@@ -12,14 +16,23 @@ Suponiendo tener un sorteador de cadenas:
 Sorteador<String> miSorteador = new Sorteador<String>();
 ```
 
-Hay dos maneras de iterarlo:
+Podría iterarse sabiendo cómo funcionan los sorteadores:
+
+```java
+while (!miSorteador.estaVacio()) {
+    System.out.println(miSorteador.proximoSorteado());
+}
+```
+
+Sin embargo, hay dos maneras de iterarlo sin conocer sus detalles de implementación ni el nombre de sus métodos:
 
 ### Obteniendo un iterador 
 
 ```java
-Iterator it = miSorteador.iterator(); // Pido un iterador al sorteador
+Iterator<String> it = miSorteador.iterator(); // Pido un iterador al sorteador
 while (it.hasNext()) { // Mientras haya siguiente
-	System.out.println(it.next()); // Mostrar siguiente
+	String elemento = it.next(); // Guardar siguiente en 'elemento'
+	System.out.println(elemento); // Mostrar 'elemento'
 }
 ```
 ### Utilizando la estructura `foreach`
