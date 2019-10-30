@@ -18,9 +18,10 @@ public class Principal {
         ///////////////// Iterar con un iterador /////////////////////
         System.out.println("Iterar con un iterador");
         // Los iteradores permiten iterar cualquier colección sin conocer sus detalles de implementación
-        Iterator it = miSorteador.iterator(); // Pido un iterador al sorteador
+        Iterator<String> it = miSorteador.iterator(); // Pido un iterador al sorteador
         while (it.hasNext()) { // Mientras haya siguiente
-            System.out.println(it.next()); // Mostrar siguiente
+            String elemento = it.next(); // Guardar siguiente en 'elemento'
+            System.out.println(elemento); // Mostrar 'elemento'
         }
 
         // Se vació el sorteador. Lo vuelvo a cargar
