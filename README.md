@@ -19,8 +19,8 @@ Sorteador<String> miSorteador = new Sorteador<String>();
 Podría iterarse sabiendo cómo funcionan los sorteadores:
 
 ```java
-while (!miSorteador.estaVacio()) {
-    System.out.println(miSorteador.proximoSorteado());
+while (!miSorteador.isEmpty()) {
+    System.out.println(miSorteador.remove());
 }
 ```
 
