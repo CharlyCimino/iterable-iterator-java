@@ -2,36 +2,39 @@ package iterableiterator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 /**
  * Colección que permite ingresar elementos de cualquier tipo y devolverlos en
- * orden aleatorio.
+ orden randomBetween.
  *
  * @author Carlos E. Cimino
- * @see <a href="http://www.github.com/caemci"/>http://www.github.com/caemci</a>
+ * @param <T> El tipo de los elementos del sorteador
+ * @see <a href="http://www.github.com/CharlyCimino"/>http://www.github.com/CharlyCimino</a>
  */
 public class Sorteador<T> implements Iterable<T> {
 
-    private ArrayList<T> elementos;
+    private List<T> elementos;
     private Random random;
 
     /**
      * Construye un nuevo sorteador de elementos.
      */
     public Sorteador() {
-        this.elementos = new ArrayList<T>();
+        this.elementos = new ArrayList<>();
         this.random = new Random();
     }
 
     /**
-     * Inserta <code>elemento</code> en este sorteador.
+     * Agrega <code>elemento</code> en este sorteador.
      *
-     * @param elemento El elemento a insertar.
+     * @param elemento El elemento a agregar.
      */
-    public void insertar(T elemento) {
+    public void add(T elemento) {
         elementos.add(elemento);
     }
 
@@ -39,35 +42,56 @@ public class Sorteador<T> implements Iterable<T> {
      * Inserta cada uno de los elementos de <code>elementos</code> en este
      * sorteador.
      *
-     * @param elementos El array de elementos a insertar.
+     * @param elementos El array de elementos a add.
      */
-    public void insertar(T[] elementos) {
-        this.insertar(Arrays.asList(elementos));
-    }
+    /*public void add(T[] elementos) {
+        this.add(Arrays.asList(elementos));
+    }*/
 
     /**
      * Inserta cada uno de los elementos de <code>elementos</code> en este
      * sorteador.
      *
-     * @param elementos La lista de elementos a insertar.
+     * @param elementos La colección con los elementos a agregar.
      */
-    public void insertar(List<T> elementos) {
+    public void add(Collection<T> elementos) {
         this.elementos.addAll(elementos);
     }
-
+    
     /**
-     * Retorna un elemento de este sorteador de manera aleatoria.
+     * Remueve un elemento de este sorteador de manera pseudoaleatoria. Retorna
+     * el elemento removido. 
      *
-     * @return un elemento de este sorteador de manera aleatoria.
+     * @return el elemento removido de este sorteador.
      * @throws IllegalStateException Si ya no quedan elementos en este
      * sorteador.
      */
-    public T proximoSorteado() {
-        if (estaVacio()) {
+    public T remove() {
+        checkEmptyness();
+        int a = randomBetween(0, this.elementos.size() - 1);
+        return this.elementos.remove(a);
+    }
+
+    /**
+     * Retorna un elemento de este sorteador de manera pseudoaleatoria.
+     *
+     * @return un elemento de este sorteador de manera pseudoaleatoria.
+     * @throws IllegalStateException Si ya no quedan elementos en este
+     * sorteador.
+     */
+    public T get() {
+        checkEmptyness();
+        int a = randomBetween(0, this.elementos.size() - 1);
+        return this.elementos.remove(a);
+    }
+    
+    /**
+     * Chequea si el sorteador está vacío y lanza una excepción en tal caso.
+     */
+    private void checkEmptyness() {
+        if (isEmpty()) {
             throw new IllegalStateException("No hay elementos en el sorteador");
         }
-        int a = aleatorio(0, this.elementos.size() - 1);
-        return this.elementos.remove(a);
     }
 
     /**
@@ -75,20 +99,23 @@ public class Sorteador<T> implements Iterable<T> {
      *
      * @return <code>true</code> si no hay elementos en este sorteador.
      */
-    public boolean estaVacio() {
+    public boolean isEmpty() {
         return this.elementos.isEmpty();
     }
 
     /**
-     * Retorna un número entero aleatorio entre <code>min</code> y
-     * <code>max</code>.
+     * Retorna un número entero pseudoaleatorio entre <code>min</code> y
+     * <code>max</code> (inclusive).
      *
-     * @param min Entero mínimo a devolver (incluído).
-     * @param max Entero máximo a devolver (incluído).
-     * @return un número entero aleatorio entre <code>min</code> y
-     * <code>max</code>.
+     * @param min Entero mínimo a devolver (inclusive).
+     * @param max Entero máximo a devolver (inclusive).
+     * @return un número entero pseudoaleatorio entre <code>min</code> y
+     * <code>max</code> (inclusive).
      */
-    private int aleatorio(int min, int max) {
+    private int randomBetween(int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("El parámetro 'min' (" + min + ") supera al parámetro 'max' (" + max + ")");
+        }
         return random.nextInt((max - min + 1)) + min;
     }
 
@@ -102,16 +129,30 @@ public class Sorteador<T> implements Iterable<T> {
         return new IteratorSorteador();
     }
 
-    private class IteratorSorteador implements Iterator<T> {
+    private class IteratorSorteador implements Iterator<T> {                    
+        private int tope;
+        private int ultimo;
+        
+        private IteratorSorteador() {
+            ultimo = elementos.size() - 1;
+            tope = ultimo;
+        }
 
         @Override
         public boolean hasNext() {
-            return !estaVacio();
+            return tope >= 0;
         }
 
         @Override
         public T next() {
-            return proximoSorteado();
-        }
+            if (tope < 0) {
+                throw new IllegalStateException("No hay más elementos en la iteración");
+            }
+            int rnd = randomBetween(0, tope);
+            T elemento = elementos.remove(rnd);
+            elementos.add(elemento); // Pone el sorteado al final
+            tope--;
+            return elemento;
+        }        
     }
 }

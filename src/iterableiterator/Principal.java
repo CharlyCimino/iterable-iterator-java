@@ -6,12 +6,12 @@ import java.util.Iterator;
  * Prueba de la colección <code>Sorteador</code>
  *
  * @author Carlos E. Cimino
- * @see <a href="http://www.github.com/caemci"/>http://www.github.com/caemci</a>
+ * @see <a href="http://www.github.com/CharlyCimino"/>http://www.github.com/CharlyCimino</a>
  */
 public class Principal {
 
     public static void main(String[] args) {
-        Sorteador<String> miSorteador = new Sorteador<String>(); // Instancia un sorteador de Strings
+        Sorteador<String> miSorteador = new Sorteador<>(); // Instancia un sorteador de Strings
 
         cargarSorteadorConDatos(miSorteador); // Carga algunos Strings
 
@@ -24,9 +24,6 @@ public class Principal {
             System.out.println(elemento); // Mostrar 'elemento'
         }
 
-        // Se vació el sorteador. Lo vuelvo a cargar
-        cargarSorteadorConDatos(miSorteador); // Carga algunos Strings
-
         ///////////////// Iterar con foreach /////////////////////
         System.out.println("Iterar con foreach");
         // Foreach permite iterar cualquier colección sin conocer sus detalles de implementación. Utiliza el iterador de la colección.
@@ -36,10 +33,11 @@ public class Principal {
     }
 
     public static void cargarSorteadorConDatos(Sorteador<String> miSorteador) {
-        miSorteador.insertar("1. Argentina");
-        miSorteador.insertar("2. Brasil");
-        miSorteador.insertar("3. Perú");
-        miSorteador.insertar("4. Bolivia");
-        miSorteador.insertar("5. Venezuela");
+        miSorteador.add("1. Asia");
+        miSorteador.add("2. América");
+        miSorteador.add("3. África");
+        miSorteador.add("4. Antártida");
+        miSorteador.add("5. Europa");
+        miSorteador.add("6. Oceanía");
     }
 }
