@@ -4,9 +4,10 @@ import java.util.Iterator;
 
 /**
  * Prueba de la colección <code>Sorteador</code>
- *
- * @author Carlos E. Cimino
- * @see <a href="http://www.github.com/CharlyCimino"/>http://www.github.com/CharlyCimino</a>
+ * 
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
  */
 public class Principal {
 

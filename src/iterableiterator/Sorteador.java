@@ -1,20 +1,19 @@
 package iterableiterator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 /**
  * Colección que permite ingresar elementos de cualquier tipo y devolverlos en
- orden randomBetween.
- *
- * @author Carlos E. Cimino
- * @param <T> El tipo de los elementos del sorteador
- * @see <a href="http://www.github.com/CharlyCimino"/>http://www.github.com/CharlyCimino</a>
+   orden aleatorio.
+ * 
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
+ * @param <T> Tipo de los elementos del sorteador
  */
 public class Sorteador<T> implements Iterable<T> {
 
@@ -130,12 +129,12 @@ public class Sorteador<T> implements Iterable<T> {
     }
 
     private class IteratorSorteador implements Iterator<T> {                    
+        private final int ULTIMO;
         private int tope;
-        private int ultimo;
         
         private IteratorSorteador() {
-            ultimo = elementos.size() - 1;
-            tope = ultimo;
+            ULTIMO = elementos.size() - 1;
+            tope = ULTIMO;
         }
 
         @Override
